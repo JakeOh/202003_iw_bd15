@@ -11,7 +11,9 @@ def minus(x, y):
     return x - y
 
 
-print(minus(1, 2))  # positional argument
-print(minus(x=1, y=2))  # keyword argument
-print(minus(y=1, x=2))
+print('function03.py:', __name__)
+if __name__ == '__main__':
+    print(minus(1, 2))  # positional argument
+    print(minus(x=1, y=2))  # keyword argument
+    print(minus(y=1, x=2))
 # keyword argument를 사용할 때는 position을 지키지 않아도 괜찮음.

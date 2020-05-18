@@ -5,7 +5,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-gapminder = pd.read_csv('gapminder.tsv', sep='\t')
+# gapminder = pd.read_csv('gapminder.tsv', sep='\t')
+gapminder = pd.read_table('gapminder.tsv')
 # tsv(tap-separated values): tab('\t')으로 값들이 구분되어 있는 파일
 print(gapminder.iloc[:5])  # head()
 print(gapminder.iloc[-5:])  # tail()
@@ -18,7 +19,7 @@ gapminder.info()
 
 # DataFrame에서 특정 컬럼 선택
 # country 컬럼만 선택, 출력
-print(gapminder['country'])
+print(gapminder['country'])  # gapminder.country
 # country, continent, year 컬럼을 선택, 출력
 print(gapminder[['country', 'continent', 'year']])
 
@@ -34,8 +35,8 @@ print(gapminder.loc[840:851, ['country', 'year', 'pop']])
 print(gapminder.iloc[840:852, [0, 2, 4]])
 
 # gapminder DF에서 gdpPercap의 최솟값, 최댓값
-min_gdp = gapminder['gdpPercap'].min()
-max_gdp = gapminder['gdpPercap'].max()
+min_gdp = gapminder['gdpPercap'].min()  # gapminder.gdpPercap.min()
+max_gdp = gapminder['gdpPercap'].max()  # gapminder.gdpPercap.max()
 print(min_gdp, max_gdp)
 
 # gdpPercap 최솟값, 최댓값 데이터를 갖는 row를 출력
@@ -44,8 +45,8 @@ data = gapminder[(gapminder['gdpPercap'] == min_gdp) |
 print(data)
 
 # lifeExp의 최솟값, 최댓값 - 데이터 출력
-min_life = gapminder['lifeExp'].min()
-max_life = gapminder['lifeExp'].max()
+min_life = gapminder.lifeExp.min()  # gapminder['lifeExp'].min()
+max_life = gapminder.lifeExp.max()  # gapminder['lifeExp'].max()
 print(min_life, max_life)
 
 data = gapminder[(gapminder['lifeExp'] == min_life) |
@@ -59,6 +60,9 @@ print(years)
 # country는 모두 몇개의 나라가 있을까요?
 countries = gapminder['country'].unique()
 print(len(countries))
+print(gapminder['country'].nunique())
+# unique(): 중복되지 않는 값들의 리스트
+# nunique(): 중복되지 않는 값들의 개수(number of unique values)
 
 # year, 평균 lifeExp 두개의 컬럼을 갖는 DataFrame 생성
 # mean_lifeExp = []
@@ -90,4 +94,12 @@ plt.show()
 
 # boolean indexing 사용
 # country 문자열이 'Korea'를 포함(contain)하는 DataFrame을 만들어서 출력
+# select * from gapminder where country like '%Korea%';
+df_korea = gapminder[gapminder['country'].str.contains('Korea')]
+print(df_korea)
 
+country_name = 'Korea, Rep.'  # 데이터 타입: str
+print(country_name.__contains__('Korea'))
+print(country_name.lower())
+print(gapminder['country'].str.lower())
+# 데이터 프레임, 시리즈에서 문자열 클래스의 메소드를 사용하는 방법
